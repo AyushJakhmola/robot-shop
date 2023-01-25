@@ -22,7 +22,7 @@ RUN if [ -n "$KEY" ]; then \
     fi
 
 
-FROM 421320058418.dkr.ecr.us-west-2.amazonaws.com/public:nginx
+FROM 309017165673.dkr.ecr.us-east-1.amazonaws.com/public:nginx
 
 EXPOSE 8080
 
