@@ -1,4 +1,4 @@
-FROM 421320058418.dkr.ecr.us-west-2.amazonaws.com/public:mongo
+FROM mongo:5
 
 COPY *.js /docker-entrypoint-initdb.d/
 
