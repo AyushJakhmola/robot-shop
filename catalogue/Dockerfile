@@ -1,4 +1,4 @@
-FROM node:14
+FROM 309017165673.dkr.ecr.us-east-1.amazonaws.com/public:rs-node
 
 ENV INSTANA_AUTO_PROFILE true
 
