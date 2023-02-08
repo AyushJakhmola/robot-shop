@@ -41,7 +41,7 @@ phases:
 #       - printf 'commit_hash:"%s", image_tag:"%s"' $COMMIT_HASH $IMAGE_TAG > imageInfo.txt
       - ls 
 artifacts:
-    files:
-      - imageDefinitions.json
+  files:
+    - imageDefinitions.json
 #      - imageDefinitions_scheduler.json
 #      - imageDefinitions_queue.json
