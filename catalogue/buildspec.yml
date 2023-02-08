@@ -6,6 +6,7 @@ env:
     AWS_ACCOUNT_ID: "309017165673"
     CONTAINER_NAME: "catalogue"
     BUILD_ENV: "dev"
+    DIR : "catalogue"
     SECRET_ID: "arn:aws:secretsmanager:us-east-1:309017165673:secret:ecs/mongo/url-z9FEzA"
   secrets-manager:
      env: ecs/mongo/url
@@ -22,7 +23,7 @@ phases:
       - echo Get Environment variables from AWS SECRETS MANAGER
       - aws secretsmanager get-secret-value --secret-id $SECRET_ID --region ap-south-1 --query SecretString --output text | jq -r 'to_entries[] | [.key, "=", "\"", .value, "\"" ]| @tsv' | tr -d "\t" > .env
       - cat .env
-#       - cd ${DIR}/
+      - cd ${DIR}/
       - echo Building the Docker image...   
       - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG --build-arg BUILD_ENV=$BUILD_ENV .
       - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG    
