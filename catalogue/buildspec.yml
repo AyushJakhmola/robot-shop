@@ -21,9 +21,9 @@ phases:
   build:
     commands:
       - echo Get Environment variables from AWS SECRETS MANAGER
-      - aws secretsmanager get-secret-value --secret-id $SECRET_ID --region ap-south-1 --query SecretString --output text | jq -r 'to_entries[] | [.key, "=", "\"", .value, "\"" ]| @tsv' | tr -d "\t" > .env
+      - aws secretsmanager get-secret-value --secret-id $SECRET_ID --region $AWS_DEFAULT_REGION --query SecretString --output text | jq -r 'to_entries[] | [.key, "=", "\"", .value, "\"" ]| @tsv' | tr -d "\t" > .env
       - cat .env
-      - cd ${DIR}/
+      - cd $DIR/
       - echo Building the Docker image...   
       - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG --build-arg BUILD_ENV=$BUILD_ENV .
       - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG    
