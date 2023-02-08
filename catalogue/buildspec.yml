@@ -39,6 +39,7 @@ phases:
 #       - printf '[{"name":"scheduler","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imageDefinitions_scheduler.json
 #       - printf '[{"name":"queue","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imageDefinitions_queue.json
 #       - printf 'commit_hash:"%s", image_tag:"%s"' $COMMIT_HASH $IMAGE_TAG > imageInfo.txt
+      - ls 
 artifacts:
     files:
       - imageDefinitions.json
