@@ -1,11 +1,11 @@
 version: 0.2
 env:
   variables:
-    AWS_DEFAULT_REGION: "ap-south-1"
-    IMAGE_REPO_NAME: "main-site"
-    AWS_ACCOUNT_ID: "238129875959"
-    CONTAINER_NAME: "site"
-    BUILD_ENV: "production"
+    AWS_DEFAULT_REGION: "us-east-1"
+    IMAGE_REPO_NAME: "dev-catalogue-repo"
+    AWS_ACCOUNT_ID: "309017165673"
+    CONTAINER_NAME: "catalogue"
+    BUILD_ENV: "dev"
 #     SECRET_ID: "arn:aws:secretsmanager:ap-south-1:238129875959:secret"
 #   secrets-manager:
 #      env: simpliv/main/site/
