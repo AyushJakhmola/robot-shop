@@ -1,7 +1,7 @@
 #
 # Build the app
 #
-FROM 309017165673.dkr.ecr.us-east-1.amazonaws.com/public:rs-php
+FROM 309017165673.dkr.ecr.us-east-1.amazonaws.com/application-base-images:rs-php-7.4-apache
 
 RUN apt-get update && apt-get install -yqq unzip libzip-dev \
     && docker-php-ext-install pdo_mysql opcache zip
