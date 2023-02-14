@@ -1,4 +1,4 @@
-FROM mysql:5.7
+FROM 309017165673.dkr.ecr.us-east-1.amazonaws.com/application-base-images:rs-mysql-5.7
 
 VOLUME /data
 
