@@ -1,4 +1,4 @@
-FROM 309017165673.dkr.ecr.us-east-1.amazonaws.com/public:rs-alpine AS build
+FROM 309017165673.dkr.ecr.us-east-1.amazonaws.com/application-base-images:rs-alpine-latest AS build
 ARG KEY
 
 WORKDIR /instana
@@ -22,7 +22,7 @@ RUN if [ -n "$KEY" ]; then \
     fi
 
 
-FROM 309017165673.dkr.ecr.us-east-1.amazonaws.com/public:rs-nginx
+FROM 309017165673.dkr.ecr.us-east-1.amazonaws.com/application-base-images:rs-nginx-1.21.6
 
 EXPOSE 8080
 
