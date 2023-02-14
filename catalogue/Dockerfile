@@ -1,4 +1,4 @@
-FROM 309017165673.dkr.ecr.us-east-1.amazonaws.com/public:rs-node
+FROM 309017165673.dkr.ecr.us-east-1.amazonaws.com/application-base-images:rs-catalogue-2.1.0
 
 ENV INSTANA_AUTO_PROFILE true
 
