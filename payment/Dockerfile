@@ -1,4 +1,4 @@
-FROM 309017165673.dkr.ecr.us-east-1.amazonaws.com/public:rs-python
+FROM 309017165673.dkr.ecr.us-east-1.amazonaws.com/application-base-images:rs-python-3.9
 
 EXPOSE 8080
 USER root
