@@ -1,7 +1,7 @@
 #
 # Build
 #
-FROM 309017165673.dkr.ecr.us-east-1.amazonaws.com/public:rs-debian AS build
+FROM 309017165673.dkr.ecr.us-east-1.amazonaws.com/application-base-images:rs-debian-10 AS build
 
 RUN apt-get update && apt-get -y install maven
 
@@ -15,7 +15,7 @@ RUN mvn package
 #
 # Run
 #
-FROM 309017165673.dkr.ecr.us-east-1.amazonaws.com/public:rs-openjdk
+FROM 309017165673.dkr.ecr.us-east-1.amazonaws.com/application-base-images:rs-openjdk-8-jdk
 
 EXPOSE 8080
 
