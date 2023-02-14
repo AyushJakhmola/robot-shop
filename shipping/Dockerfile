@@ -15,7 +15,7 @@ RUN mvn package
 #
 # Run
 #
-FROM 309017165673.dkr.ecr.us-east-1.amazonaws.com/application-base-images:rs-openjdk-8-jdk
+FROM 309017165673.dkr.ecr.us-east-1.amazonaws.com/application-base-images:rs-openjdk-8
 
 EXPOSE 8080
 
