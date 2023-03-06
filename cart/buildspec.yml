@@ -1,0 +1,52 @@
+version: 0.2
+env:
+  variables:
+    AWS_DEFAULT_REGION: "us-east-1"
+    IMAGE_REPO_NAME: "dev-cart-repo"
+    AWS_ACCOUNT_ID: "309017165673"
+    CONTAINER_NAME: "cart"
+    BUILD_ENV: "dev"
+    DIR : "cart"
+#     SECRET_ID: "arn:aws:secretsmanager:us-east-1:309017165673:secret:ecs/mongo/url-z9FEzA"
+#   secrets-manager:
+#      env: ecs/mongo/url
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
+  build:
+    commands:
+      - cd $DIR/
+#       - echo Get Environment variables from AWS SECRETS MANAGER
+#       - aws secretsmanager get-secret-value --secret-id $SECRET_ID --region $AWS_DEFAULT_REGION --query SecretString --output text | jq -r 'to_entries[] | [.key, "=", "\"", .value, "\"" ]| @tsv' | tr -d "\t" > .env
+#       - cat .env
+      - echo Building the Docker image...   
+      - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG --build-arg BUILD_ENV=$BUILD_ENV .
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG    
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:latest    
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:latest
+      - pwd
+      - ls -al
+      - cd ..
+      - pwd 
+      - ls -al
+      - echo Writing image definitions file...
+      - printf '[{"name":"%s","imageUri":"%s"}]' $CONTAINER_NAME $REPOSITORY_URI:$IMAGE_TAG > imageDefinitions.json
+#       - printf '[{"name":"scheduler","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imageDefinitions_scheduler.json
+#       - printf '[{"name":"queue","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imageDefinitions_queue.json
+#       - printf 'commit_hash:"%s", image_tag:"%s"' $COMMIT_HASH $IMAGE_TAG > imageInfo.txt
+      - ls -al  
+artifacts:
+  files:
+    - imageDefinitions.json
+#      - imageDefinitions_scheduler.json
+#      - imageDefinitions_queue.json
